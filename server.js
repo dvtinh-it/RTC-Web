@@ -6,6 +6,7 @@ const socket = require('socket.io')
 const io = socket(server)
 const username = require('username-generator')
 const path = require('path')
+var cors = require('cors')
 
 // app.use(express.static('./client/build'));
 

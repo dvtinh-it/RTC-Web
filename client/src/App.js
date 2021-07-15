@@ -85,13 +85,17 @@ function App() {
   useEffect(() => {
     socket.current = io.connect("/");
     // socket.current = io("ws://localhost:8000");
-    console.log("soker.io", socket.current);
-
+    var user1 = Math.floor(Math.random() * 100);
+    var user2 = 2;
+    socket.current.emit("twoID" , user1 )
 
     socket.current.on("yourID", (id) => {
+      console.log("id",id);
       setYourID(id);
     })
+
     socket.current.on("allUsers", (users) => {
+      console.log("users",users);
       setUsers(users);
     })
 

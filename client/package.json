@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "http://localhost:8000",
+  "proxy": "http://se-be-v2.ppe.edu.vn:86",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
