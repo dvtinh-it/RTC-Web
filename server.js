@@ -12,9 +12,11 @@ const path = require('path')
 // app.get('/file', (req, res) => {
 //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 // })
+app.options('*', cors()) 
 app.get('/', (req, res) => {
     res.send("server is up and running");
 })
+
 
 
 const users = {}
