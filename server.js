@@ -3,17 +3,25 @@ const http = require('http')
 const app = express()
 const server = http.createServer(app)
 const socket = require('socket.io')
-const io = socket(server)
+// const io = socket(server)
+const io = socket(server,  {
+    cors :{
+        origin :"http://localhost:3002",
+        methods :["GET","POST"]
+    }
+  });
 const username = require('username-generator')
 const path = require('path')
-var cors = require('cors')
+ 
+
 
 // app.use(express.static('./client/build'));
 
 // app.get('/file', (req, res) => {
 //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 // })
-app.options('*', cors()) 
+
+
 app.get('/', (req, res) => {
     res.send("server is up and running");
 })
@@ -22,7 +30,7 @@ app.get('/', (req, res) => {
 
 const users = {}
 
-io.on('connection', socket => {
+io.on('connection' ,socket => {
     console.log("new user login");
     var userid  = "";
     socket.on("twoID" ,(user1 ,user2) => {
@@ -55,8 +63,9 @@ io.on('connection', socket => {
     })
 })
 
-const port = process.env.PORT || 86
 
-server.listen(port, () => {
+const port = process.env.PORT || 8000
+
+server.listen(port, ()=>{
     console.log(`Server running on port ${port}`)
 })
