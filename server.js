@@ -7,26 +7,32 @@ const io = socket(server)
 const username = require('username-generator')
 const path = require('path')
 
-app.use(express.static('./client/build'));
+// app.use(express.static('./client/build'));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+// app.get('/file', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+// })
+app.get('/', (req, res) => {
+    res.send("server is up and running");
 })
+
 
 const users = {}
 
 io.on('connection', socket => {
-    //generate username against a socket connection and store it
-    const userid = username.generateUsername('-')
-    if (!users[userid]) {
-        users[userid] = socket.id
-    }
-    //send back username
-    socket.emit('yourID', userid)
-    io.sockets.emit('allUsers', users)
-
+    console.log("new user login");
+    var userid  = "";
+    socket.on("twoID" ,(user1 ,user2) => {
+        userid = user1;
+        if (!users[userid]) {
+                users[userid] = socket.id
+        }        
+        socket.emit('yourID', userid)
+        io.sockets.emit('allUsers', users)
+    })
     socket.on('disconnect', () => {
         delete users[userid]
+
     })
 
     socket.on('callUser', (data) => {
@@ -46,7 +52,7 @@ io.on('connection', socket => {
     })
 })
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 86
 
 server.listen(port, () => {
     console.log(`Server running on port ${port}`)
