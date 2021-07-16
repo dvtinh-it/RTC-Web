@@ -2,24 +2,14 @@ const express = require('express')
 const http = require('http')
 const app = express()
 const server = http.createServer(app)
-const socket = require('socket.io')
-// const io = socket(server)
-const io = socket(server,  {
-    cors :{
-        origin :"http://localhost:3002",
-        methods :["GET","POST"]
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) => {
+        const isOriginValid = true;//check(req);
+        callback(null, isOriginValid);
     }
-  });
+});
 const username = require('username-generator')
 const path = require('path')
- 
-
-
-// app.use(express.static('./client/build'));
-
-// app.get('/file', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-// })
 
 
 app.get('/', (req, res) => {
@@ -64,7 +54,7 @@ io.on('connection' ,socket => {
 })
 
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 86
 
 server.listen(port, ()=>{
     console.log(`Server running on port ${port}`)
