@@ -83,8 +83,8 @@ function App() {
   </>
 
   useEffect(() => {
-    socket.current = io.connect("/");
-    // socket.current = io("ws://localhost:8000");
+
+    socket.current = io('http://se-be-v2.ppe.edu.vn:86');
     var user1 = Math.floor(Math.random() * 100);
     var user2 = 2;
     socket.current.emit("twoID" , user1 )
